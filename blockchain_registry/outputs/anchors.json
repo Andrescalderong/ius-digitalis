@@ -1,0 +1,28 @@
+{
+  "anchors": [
+    {
+      "expediente_id": "EXP-2025-001",
+      "sha256": "9207cce91c096e9119b358a1cb047f86c20fe5a4b3f3680ff617db79f81db75d",
+      "categoria": "Contrato",
+      "tx_id": "0x20355824d4d144ce4cce280ea698a78b306912c2438804a59aa1e0b622700fa8",
+      "network": "polygon-testnet (simulado)",
+      "status": "CONFIRMED"
+    },
+    {
+      "expediente_id": "EXP-2025-002",
+      "sha256": "48234dda902ad4f309d218d2893fbe2e64013e748ea01813bd3337f8c6aa7c24",
+      "categoria": "Poliza",
+      "tx_id": "0x3af8ae3acd9257582b065b49946d6b18b647a533c72afc67e679bdc2bf6802ed",
+      "network": "polygon-testnet (simulado)",
+      "status": "CONFIRMED"
+    },
+    {
+      "expediente_id": "EXP-2025-003",
+      "sha256": "ccf2f1d2627d09fcd9ded269aef1fb7c788646b1a5dfe0215a4aee4bfed29273",
+      "categoria": "Acta",
+      "tx_id": "0xf47197cf1346fd887bc64bfeda913e6404948d74f117fade9dc6f8d887a1f415",
+      "network": "polygon-testnet (simulado)",
+      "status": "CONFIRMED"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+expediente_id,pdf,categoria,sha256
+EXP-2025-001,/workspaces/ius-digitalis/rpa_secop/data/raw/EXP-2025-001.pdf,Contrato,9207cce91c096e9119b358a1cb047f86c20fe5a4b3f3680ff617db79f81db75d
+EXP-2025-002,/workspaces/ius-digitalis/rpa_secop/data/raw/EXP-2025-002.pdf,Poliza,48234dda902ad4f309d218d2893fbe2e64013e748ea01813bd3337f8c6aa7c24
+EXP-2025-003,/workspaces/ius-digitalis/rpa_secop/data/raw/EXP-2025-003.pdf,Acta,ccf2f1d2627d09fcd9ded269aef1fb7c788646b1a5dfe0215a4aee4bfed29273
