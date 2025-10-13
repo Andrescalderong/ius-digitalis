@@ -1,0 +1,10 @@
+graph TD
+  SECOP-->RPA[Fargate RPA]
+  RPA-->S3[S3]
+  S3-->|evento|SF[Step Functions]
+  SF-->Lambda[Lambda Clasifica]
+  SF-->SageMaker[SageMaker NLP]
+  Lambda-->Neptune[Neptune KG]
+  SageMaker-->Neptune
+  SF-->BC[Blockchain Hash Anchor]
+  AppSync[GraphQL API]-->Neptune
