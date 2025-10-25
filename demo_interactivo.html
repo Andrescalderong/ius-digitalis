@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUS-DIGITALIS - Demo en Vivo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #00ff41;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            border: 3px solid #00ff41;
+            padding: 30px;
+            margin-bottom: 30px;
+            background: rgba(26, 31, 58, 0.8);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
+        .subtitle { font-size: 1.2em; color: #4ecdc4; }
+        
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .module {
+            background: #1a1f3a;
+            border: 2px solid #555;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .module.active {
+            border-color: #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            transform: scale(1.05);
+        }
+        .module.completed {
+            border-color: #4ecdc4;
+            background: #0f1729;
+        }
+        .module-icon { font-size: 3em; margin: 10px 0; }
+        .module-title { font-size: 1.3em; color: #00ff41; margin: 10px 0; }
+        .module-status { color: #4ecdc4; margin: 10px 0; }
+        
+        .console {
+            background: #0f1729;
+            border: 2px solid #00ff41;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        .console-line {
+            margin: 5px 0;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .console-line.success { color: #00ff41; }
+        .console-line.info { color: #4ecdc4; }
+        .console-line.warning { color: #ff6b35; }
+        
+        .results {
+            background: #1a1f3a;
+            border: 2px solid #00ff41;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        .results.show { display: block; }
+        
+        .transaction {
+            background: #0f1729;
+            border-left: 5px solid #00ff41;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .tx-row { margin: 8px 0; }
+        .tx-label { color: #00ff41; font-weight: bold; display: inline-block; width: 120px; }
+        .tx-value { color: #ffffff; }
+        .hash { color: #ff6b35; font-size: 0.9em; word-break: break-all; }
+        
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .btn {
+            background: #00ff41;
+            color: #0a0e27;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #4ecdc4;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.5);
+        }
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 255, 65, 0.3);
+            border-top-color: #00ff41;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⛓️ IUS-DIGITALIS - DEMO EN VIVO</h1>
+            <p class="subtitle">Sistema Automatizado de Gestión Documental con Blockchain</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="startBtn" onclick="startPipeline()">
+                🚀 EJECUTAR PIPELINE COMPLETO
+            </button>
+        </div>
+
+        <div class="pipeline">
+            <div class="module" id="module-rpa">
+                <div class="module-icon">📄</div>
+                <div class="module-title">RPA</div>
+                <div class="module-status">Generación de PDFs</div>
+            </div>
+            <div class="module" id="module-ia">
+                <div class="module-icon">🤖</div>
+                <div class="module-title">IA</div>
+                <div class="module-status">Clasificación ML</div>
+            </div>
+            <div class="module" id="module-bc">
+                <div class="module-icon">⛓️</div>
+                <div class="module-title">BLOCKCHAIN</div>
+                <div class="module-status">Anclaje Inmutable</div>
+            </div>
+        </div>
+
+        <div class="console" id="console"></div>
+
+        <div class="results" id="results">
+            <h2 style="color: #00ff41; margin-bottom: 20px;">🔐 ANCLAJES BLOCKCHAIN</h2>
+            <div id="transactions"></div>
+        </div>
+    </div>
+
+    <script>
+        const blockchainData = {
+            "anchors": [
+                {
+                    "expediente_id": "EXP-2025-001.pdf",
+                    "categoria": "Contrato",
+                    "sha256": "e06a8a365efb99ebc00716cff55e343e2b1fdde1e558d702c7190450ef3ff280",
+                    "txid": "2040bfa7f306023098793e69becba75c9579323654e3e7196a21354d2c943e79",
+                    "network": "ethereum-mainnet-simulated",
+                    "timestamp": 1729809981
+                },
+                {
+                    "expediente_id": "EXP-2025-002.pdf",
+                    "categoria": "Poliza",
+                    "sha256": "0b0025ed78d55153271e27fa789c25bd1ec5ad2099e68d652608a233aa3b1be5",
+                    "txid": "0efd35a02acde6d5a5fd1efcd36e8c7e10e47c3e48e695a9573a4a744f4c6deb",
+                    "network": "ethereum-mainnet-simulated",
+                    "timestamp": 1729809981
+                },
+                {
+                    "expediente_id": "EXP-2025-003.pdf",
+                    "categoria": "Acta",
+                    "sha256": "97919347d3fd70a82b5e70644da4e884c86cef7864f480d011c74406e727d9e1",
+                    "txid": "e4aef4e861267c96a52cb9a200f7247d47f80d9ee687f466324833b022e9f7b0",
+                    "network": "ethereum-mainnet-simulated",
+                    "timestamp": 1729809981
+                }
+            ],
+            "total": 3
+        };
+
+        let consoleEl = document.getElementById('console');
+        let resultsEl = document.getElementById('results');
+        let startBtn = document.getElementById('startBtn');
+
+        function log(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            line.textContent = message;
+            consoleEl.appendChild(line);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function activateModule(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function completeModule(id) {
+            document.getElementById(id).classList.remove('active');
+            document.getElementById(id).classList.add('completed');
+        }
+
+        async function startPipeline() {
+            startBtn.disabled = true;
+            startBtn.innerHTML = '<span class="spinner"></span> EJECUTANDO...';
+            consoleEl.innerHTML = '';
+            resultsEl.classList.remove('show');
+
+            // Reset modules
+            document.querySelectorAll('.module').forEach(m => {
+                m.classList.remove('active', 'completed');
+            });
+
+            log('════════════════════════════════════════════════════════', 'info');
+            log('🚀 IUS-DIGITALIS PIPELINE INICIADO', 'success');
+            log('════════════════════════════════════════════════════════', 'info');
+            await sleep(1000);
+
+            // FASE 1: RPA
+            log('', 'info');
+            log('▶️  FASE 1: RPA - GENERACIÓN DE PDFs', 'success');
+            log('════════════════════════════════════════════════════════', 'info');
+            activateModule('module-rpa');
+            await sleep(800);
+
+            log('[RPA] Iniciando generación de documentos...', 'info');
+            await sleep(600);
+            log('[OK] Generado EXP-2025-001.pdf  sha256=e06a8a36...', 'success');
+            await sleep(500);
+            log('[OK] Generado EXP-2025-002.pdf  sha256=0b0025ed...', 'success');
+            await sleep(500);
+            log('[OK] Generado EXP-2025-003.pdf  sha256=9791934...', 'success');
+            await sleep(600);
+            log('✅ RPA completado - 3 PDFs generados', 'success');
+            completeModule('module-rpa');
+            await sleep(1000);
+
+            // FASE 2: IA
+            log('', 'info');
+            log('▶️  FASE 2: IA - CLASIFICACIÓN', 'success');
+            log('════════════════════════════════════════════════════════', 'info');
+            activateModule('module-ia');
+            await sleep(800);
+
+            log('[IA] Iniciando clasificación de documentos...', 'info');
+            await sleep(600);
+            log('[IA] EXP-2025-001.pdf → Contrato', 'info');
+            await sleep(500);
+            log('[IA] EXP-2025-002.pdf → Poliza', 'info');
+            await sleep(500);
+            log('[IA] EXP-2025-003.pdf → Acta', 'info');
+            await sleep(600);
+            log('✅ IA completado - 3 documentos clasificados', 'success');
+            completeModule('module-ia');
+            await sleep(1000);
+
+            // FASE 3: BLOCKCHAIN
+            log('', 'info');
+            log('▶️  FASE 3: BLOCKCHAIN - ANCLAJE', 'success');
+            log('════════════════════════════════════════════════════════', 'info');
+            activateModule('module-bc');
+            await sleep(800);
+
+            log('[BLOCKCHAIN] Iniciando anclaje inmutable...', 'info');
+            await sleep(700);
+            log('[BC] EXP-2025-001.pdf -> tx 2040bfa7... CONFIRMED', 'success');
+            await sleep(600);
+            log('[BC] EXP-2025-002.pdf -> tx 0efd35a0... CONFIRMED', 'success');
+            await sleep(600);
+            log('[BC] EXP-2025-003.pdf -> tx e4aef4e8... CONFIRMED', 'success');
+            await sleep(700);
+            log('✅ Blockchain completado - 3 transacciones ancladas', 'success');
+            completeModule('module-bc');
+            await sleep(1000);
+
+            // FINAL
+            log('', 'info');
+            log('════════════════════════════════════════════════════════', 'info');
+            log('✅ PIPELINE COMPLETADO EXITOSAMENTE', 'success');
+            log('⏱️  Duración total: 15 segundos', 'info');
+            log('════════════════════════════════════════════════════════', 'info');
+
+            // Mostrar resultados
+            await sleep(1000);
+            showResults();
+
+            startBtn.disabled = false;
+            startBtn.textContent = '🔄 EJECUTAR DE NUEVO';
+        }
+
+        function showResults() {
+            const container = document.getElementById('transactions');
+            container.innerHTML = '';
+
+            blockchainData.anchors.forEach((anchor, i) => {
+                const date = new Date(anchor.timestamp * 1000);
+                const dateStr = date.toLocaleString('es-ES');
+                
+                container.innerHTML += `
+                    <div class="transaction">
+                        <h3 style="color: #4ecdc4; margin-bottom: 15px;">📄 Transacción #${i + 1}</h3>
+                        <div class="tx-row">
+                            <span class="tx-label">Expediente:</span>
+                            <span class="tx-value">${anchor.expediente_id}</span>
+                        </div>
+                        <div class="tx-row">
+                            <span class="tx-label">Categoría:</span>
+                            <span class="tx-value">${anchor.categoria}</span>
+                        </div>
+                        <div class="tx-row">
+                            <span class="tx-label">SHA-256:</span>
+                            <span class="hash">${anchor.sha256}</span>
+                        </div>
+                        <div class="tx-row">
+                            <span class="tx-label">TX ID:</span>
+                            <span class="hash">${anchor.txid}</span>
+                        </div>
+                        <div class="tx-row">
+                            <span class="tx-label">Network:</span>
+                            <span class="tx-value">${anchor.network}</span>
+                        </div>
+                        <div class="tx-row">
+                            <span class="tx-label">Timestamp:</span>
+                            <span class="tx-value" style="color: #4ecdc4;">${dateStr}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsEl.classList.add('show');
+        }
+    </script>
+<script src="inject_dashboard.js"></script>
+</body>
+</html>
+<script>
+(async () => {
+  try {
+    const r = await fetch('blockchain_registry/outputs/anchors.json', { cache: 'no-store' });
+    const data = await r.json();
+    // Exponer a tu código existente:
+    window.blockchainData = data;
+    // Si tu función ya existe, dibuja:
+    if (typeof showResults === 'function') {
+      showResults();
+    } else {
+      console.warn('showResults() no está definido; crea la función o revisa el nombre.');
+    }
+  } catch (e) {
+    console.error('Error cargando anchors.json:', e);
+    const el = document.getElementById('transactions') || document.body;
+    el.insertAdjacentHTML('beforeend', '<div style="color:#f55">No se pudo cargar anchors.json</div>');
+  }
+})();
+</script>

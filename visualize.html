@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUS-DIGITALIS Dashboard</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            border: 2px solid #00ff41;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #1a1f3a;
+            border: 1px solid #00ff41;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .transaction {
+            background: #0f1729;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #00ff41;
+        }
+        .hash {
+            font-size: 0.85em;
+            color: #ff6b35;
+            word-break: break-all;
+        }
+        .timestamp {
+            color: #4ecdc4;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⛓️ IUS-DIGITALIS BLOCKCHAIN REGISTRY</h1>
+        <p>Sistema de Verificación de Integridad Documental</p>
+    </div>
+
+    <div class="card">
+        <h2>📊 Estado del Sistema</h2>
+        <p>🟢 Todos los módulos operativos</p>
+        <p>📄 Documentos procesados: <span id="total-docs">0</span></p>
+        <p>⛓️ Transacciones ancladas: <span id="total-txs">0</span></p>
+    </div>
+
+    <div class="card">
+        <h2>🔐 Anclajes Blockchain</h2>
+        <div id="transactions"></div>
+    </div>
+
+    <script>
+        // Cargar datos del JSON
+        fetch('blockchain_registry/outputs/anchors.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('total-docs').textContent = data.total;
+                document.getElementById('total-txs').textContent = data.total;
+                
+                const container = document.getElementById('transactions');
+                data.anchors.forEach((anchor, i) => {
+                    const date = new Date(anchor.timestamp * 1000);
+                    container.innerHTML += `
+                        <div class="transaction">
+                            <h3>📄 Transacción #${i + 1}</h3>
+                            <p><strong>Expediente:</strong> ${anchor.expediente_id}</p>
+                            <p><strong>Categoría:</strong> ${anchor.categoria}</p>
+                            <p><strong>SHA-256:</strong> <span class="hash">${anchor.sha256}</span></p>
+                            <p><strong>TX ID:</strong> <span class="hash">${anchor.txid}</span></p>
+                            <p><strong>Network:</strong> ${anchor.network}</p>
+                            <p class="timestamp"><strong>Timestamp:</strong> ${date.toLocaleString()}</p>
+                        </div>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>

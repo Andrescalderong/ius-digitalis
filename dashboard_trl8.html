@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IUS-DIGITALIS – Demo TRL-8</title>
+<style>
+  body{background:#0b1220;color:#e6eefc;font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:24px}
+  h1{margin:0 0 8px;font-size:22px}
+  .sub{opacity:.7;margin-bottom:24px}
+  .log{background:#0d1530;border:1px solid #1e2a4a;border-radius:12px;padding:14px 16px;font-family:ui-monospace,Menlo,monospace;margin-bottom:18px;white-space:pre-wrap}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+  .card{background:#0d1530;border:1px solid #1e2a4a;border-radius:16px;padding:16px}
+  .card h3{margin:0 0 12px;color:#4ecdc4;font-size:16px}
+  .row{display:flex;gap:8px;margin:6px 0}
+  .label{width:110px;opacity:.75}
+  .val{flex:1}
+  .hash{font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all}
+  .ok{color:#00d084}
+  .err{color:#ff6b6b}
+  .hint{opacity:.8;margin-top:12px;font-size:13px}
+  a{color:#7cc1ff;text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+<body>
+  <h1>🧩 IUS-DIGITALIS – Demo TRL-8</h1>
+  <div class="sub">RPA → IA → Blockchain → Visualización</div>
+
+  <div id="log" class="log">Cargando transacciones…</div>
+  <div id="grid" class="grid"></div>
+
+  <div class="hint">
+    Sugerencia para el video: haz scroll por las tarjetas, abre un PDF y muestra que el
+    <code>SHA-256</code> coincide con el anclaje. Luego ejecuta <code>verificar_todo.sh</code>.
+  </div>
+
+<script>
+(async function(){
+  const log = (msg, cls) => {
+    const el = document.getElementById('log');
+    el.textContent = msg;
+    el.className = 'log ' + (cls||'');
+  };
+
+  try {
+    const r = await fetch('blockchain_registry/outputs/anchors.json', { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    const data = await r.json();
+
+    if (!data?.anchors?.length) {
+      log('No hay anclajes para mostrar.', 'err');
+      return;
+    }
+
+    log(`Transacciones: ${data.anchors.length}  •  Red: ${data.anchors[0].network}`, 'ok');
+
+    const grid = document.getElementById('grid');
+    data.anchors.forEach((a, i) => {
+      const date = new Date(a.timestamp*1000).toLocaleString('es-ES');
+      const html = `
+        <div class="card">
+          <h3>📄 Transacción #${i+1}</h3>
+          <div class="row"><div class="label">Expediente</div><div class="val">${a.expediente_id}</div></div>
+          <div class="row"><div class="label">Categoría</div><div class="val">${a.categoria}</div></div>
+          <div class="row"><div class="label">SHA-256</div><div class="val hash">${a.sha256}</div></div>
+          <div class="row"><div class="label">TX ID</div><div class="val hash">${a.txid}</div></div>
+          <div class="row"><div class="label">Network</div><div class="val">${a.network}</div></div>
+          <div class="row"><div class="label">Timestamp</div><div class="val">${date}</div></div>
+        </div>`;
+      grid.insertAdjacentHTML('beforeend', html);
+    });
+  } catch (e) {
+    log('No se pudo cargar anchors.json: ' + e.message, 'err');
+  }
+})();
+</script>
+</body>
+</html>
