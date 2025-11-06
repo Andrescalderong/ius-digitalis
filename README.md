@@ -100,4 +100,6 @@ python3 blockchain_registry/anchor_v2.py
 
 ## 📄 Licencia
 
-Proyecto académico - IUS-DIGITALIS © 2025
+## 📦 Descargas Oficiales
+- 🔗 [Versión 1.0 – Auditoría Completa del Proyecto](https://github.com/Andrescalderong/ius-digitalis/releases/tag/v1.0)
+- Contiene los archivos de instalación, documentación técnica y demostraciones.
