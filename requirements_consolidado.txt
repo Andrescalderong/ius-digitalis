@@ -1,0 +1,241 @@
+# IUS-DIGITALIS: Dependencias Consolidadas
+# Versión: 2.0
+# Fecha: 5 de noviembre de 2025
+# 
+# Instalación: pip install -r requirements.txt
+# 
+# Notas:
+# - Versiones especificadas con >= permiten actualizaciones menores automáticas
+# - Para producción, considerar pinning exacto (==) de versiones
+
+################################################################################
+# CORE: APIs de IA
+################################################################################
+
+# Anthropic Claude API
+anthropic>=0.5.0
+
+# OpenAI API (GPT-4, embeddings)
+openai>=1.0.0
+
+# LangChain para orquestación de LLMs
+langchain>=0.1.0
+langchain-community>=0.1.0
+
+# Embeddings y vectorización semántica
+sentence-transformers>=2.2.0
+
+################################################################################
+# NLP Y PROCESAMIENTO DE TEXTO
+################################################################################
+
+# spaCy para procesamiento de lenguaje natural
+spacy>=3.5.0
+
+# Transformers de Hugging Face
+transformers>=4.30.0
+
+# Tokenizadores rápidos
+tokenizers>=0.13.0
+
+# Detección de idioma
+langdetect>=1.0.9
+
+# Normalización de texto
+unidecode>=1.3.6
+
+################################################################################
+# BLOCKCHAIN Y WEB3
+################################################################################
+
+# Web3.py para interacción con Ethereum/Polygon
+web3>=6.0.0
+
+# Gestión de cuentas Ethereum
+eth-account>=0.9.0
+
+# Utilidades de hashing
+eth-hash[pycryptodome]>=0.5.0
+
+# Solidity compiler wrapper
+py-solc-x>=1.1.1
+
+################################################################################
+# PROCESAMIENTO DE DOCUMENTOS
+################################################################################
+
+# PDF processing
+PyPDF2>=3.0.0
+pdfplumber>=0.9.0
+
+# Alternativa avanzada para PDFs
+pypdf>=3.15.0
+
+# Procesamiento de documentos Word
+python-docx>=0.8.11
+
+# Manejo de archivos Excel
+openpyxl>=3.1.0
+
+# Extracción de texto de imágenes (OCR)
+pytesseract>=0.3.10
+Pillow>=10.0.0
+
+################################################################################
+# WEB Y NETWORKING
+################################################################################
+
+# Cliente HTTP moderno
+requests>=2.31.0
+
+# Cliente HTTP asíncrono
+httpx>=0.24.0
+
+# Web scraping (si se necesita)
+beautifulsoup4>=4.12.0
+
+################################################################################
+# DATA SCIENCE Y ANÁLISIS
+################################################################################
+
+# NumPy para operaciones numéricas
+numpy>=1.24.0
+
+# Pandas para manipulación de datos
+pandas>=2.0.0
+
+# Scikit-learn para ML tradicional
+scikit-learn>=1.3.0
+
+################################################################################
+# BASES DE DATOS Y STORAGE
+################################################################################
+
+# SQLite (incluido en Python, pero para ORM)
+sqlalchemy>=2.0.0
+
+# PostgreSQL driver (opcional)
+psycopg2-binary>=2.9.0
+
+# Redis para caché (opcional)
+redis>=4.6.0
+
+################################################################################
+# UTILIDADES Y HELPERS
+################################################################################
+
+# Variables de entorno
+python-dotenv>=1.0.0
+
+# Manipulación de fechas
+python-dateutil>=2.8.2
+
+# JSON avanzado
+ujson>=5.8.0
+
+# YAML parsing
+PyYAML>=6.0
+
+# Rich para output bonito en terminal
+rich>=13.5.0
+
+# Click para CLI
+click>=8.1.0
+
+# Progress bars
+tqdm>=4.66.0
+
+################################################################################
+# TESTING Y QUALITY ASSURANCE
+################################################################################
+
+# Framework de testing
+pytest>=7.4.0
+
+# Cobertura de código
+pytest-cov>=4.1.0
+
+# Testing asíncrono
+pytest-asyncio>=0.21.0
+
+# Mocking
+pytest-mock>=3.11.0
+
+# Testing de APIs
+responses>=0.23.0
+
+################################################################################
+# LINTING Y FORMATEO
+################################################################################
+
+# Formateo de código
+black>=23.7.0
+
+# Ordenamiento de imports
+isort>=5.12.0
+
+# Linting
+flake8>=6.1.0
+
+# Type checking
+mypy>=1.5.0
+
+# Análisis de seguridad
+bandit>=1.7.5
+
+################################################################################
+# LOGGING Y MONITORING
+################################################################################
+
+# Logging estructurado
+structlog>=23.1.0
+
+# Monitoreo de errores (opcional)
+sentry-sdk>=1.29.0
+
+################################################################################
+# DEPLOYMENT Y DEVOPS
+################################################################################
+
+# WSGI server
+gunicorn>=21.2.0
+
+# ASGI server
+uvicorn[standard]>=0.23.0
+
+################################################################################
+# DOCUMENTACIÓN
+################################################################################
+
+# Generación de documentación
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+
+################################################################################
+# DEPENDENCIAS ESPECÍFICAS DE DESARROLLO
+################################################################################
+
+# Jupyter para notebooks (desarrollo)
+jupyter>=1.0.0
+ipython>=8.14.0
+
+# Debugging mejorado
+ipdb>=0.13.13
+
+################################################################################
+# NOTAS DE INSTALACIÓN
+################################################################################
+
+# Para instalar spaCy con modelo en español:
+# python -m spacy download es_core_news_sm
+#
+# Para instalar tesseract (OCR):
+# macOS: brew install tesseract
+# Ubuntu: apt-get install tesseract-ocr
+# Windows: Descargar de https://github.com/UB-Mannheim/tesseract/wiki
+#
+# Para instalar Solidity compiler:
+# python -m solcx.install v0.8.19
+#
+# Para verificar instalación:
+# pip list | grep -E "(anthropic|web3|spacy)"

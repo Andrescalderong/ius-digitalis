@@ -1,0 +1,28 @@
+2025-11-05 20:08:17,259 - __main__ - INFO - Inicializando clasificador: RuleBasedClassifier
+2025-11-05 20:08:17,260 - __main__ - INFO - LegalClassifier inicializado correctamente
+2025-11-05 20:08:17,260 - __main__ - INFO - Clasificación exitosa: civil (confianza: 0.50)
+2025-11-05 20:08:23,214 - __main__ - ERROR - Archivo no encontrado: data/input/ejemplo.txt
+2025-11-05 20:09:37,415 - __main__ - INFO - Inicializando clasificador: TransformerClassifier
+2025-11-05 20:09:38,902 - __main__ - INFO - Usando modelo pre-entrenado: dccuchile/bert-base-spanish-wwm-cased
+2025-11-05 20:10:07,627 - __main__ - INFO - Modelo Transformer cargado correctamente
+2025-11-05 20:10:07,628 - __main__ - INFO - LegalClassifier inicializado correctamente
+2025-11-05 20:10:08,750 - __main__ - INFO - Clasificación exitosa: civil (confianza: 0.59)
+2025-11-05 20:10:08,750 - __main__ - INFO - Resultados guardados en: outputs/resultado.json
+2025-11-05 20:12:53,333 - __main__ - INFO - Inicializando clasificador: TransformerClassifier
+2025-11-05 20:12:54,817 - __main__ - INFO - Usando modelo pre-entrenado: dccuchile/bert-base-spanish-wwm-cased
+2025-11-05 20:12:55,415 - __main__ - INFO - Modelo Transformer cargado correctamente
+2025-11-05 20:12:55,415 - __main__ - INFO - LegalClassifier inicializado correctamente
+2025-11-05 20:12:56,717 - __main__ - INFO - Clasificación exitosa: penal (confianza: 0.64)
+2025-11-05 20:12:56,718 - __main__ - INFO - Resultados guardados en: outputs/ejemplo_result.json
+2025-11-05 20:26:14,998 - __main__ - INFO - Inicializando clasificador: TransformerClassifier
+2025-11-05 20:26:16,524 - __main__ - INFO - Usando modelo pre-entrenado: dccuchile/bert-base-spanish-wwm-cased
+2025-11-05 20:26:17,235 - __main__ - INFO - Modelo Transformer cargado correctamente
+2025-11-05 20:26:17,235 - __main__ - INFO - LegalClassifier inicializado correctamente
+2025-11-05 20:26:18,946 - __main__ - INFO - Clasificación exitosa: penal (confianza: 0.55)
+2025-11-05 20:26:18,947 - __main__ - INFO - Resultados guardados en: /Users/andrescalderong./Downloads/ius-digitalis-audit-completo/web/tmp/out_20251106T012614890191.json
+2025-11-05 20:26:32,342 - __main__ - INFO - Inicializando clasificador: TransformerClassifier
+2025-11-05 20:26:33,739 - __main__ - INFO - Usando modelo pre-entrenado: dccuchile/bert-base-spanish-wwm-cased
+2025-11-05 20:26:34,397 - __main__ - INFO - Modelo Transformer cargado correctamente
+2025-11-05 20:26:34,397 - __main__ - INFO - LegalClassifier inicializado correctamente
+2025-11-05 20:26:35,842 - __main__ - INFO - Clasificación exitosa: penal (confianza: 0.57)
+2025-11-05 20:26:35,851 - __main__ - INFO - Resultados guardados en: /Users/andrescalderong./Downloads/ius-digitalis-audit-completo/web/tmp/out_20251106T012631536260.json
