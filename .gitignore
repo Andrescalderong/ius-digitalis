@@ -25,3 +25,20 @@ uploads/
 # Archivos grandes temporales
 *.zip
 Archivo.zip
+.venv/
+__pycache__/
+*.pyc
+.cache/
+.huggingface/
+build/
+dist/
+outputs/
+uploads/
+*.log
+*.tmp
+.DS_Store
+.env
+.env.*
+.env.local
+*.zip
+Archivo.zip
