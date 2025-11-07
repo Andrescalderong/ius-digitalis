@@ -1,0 +1,27 @@
+# Python / venv
+.venv/
+__pycache__/
+*.pyc
+
+# Cachés y modelos
+.cache/
+.huggingface/
+*.safetensors
+*.bin
+
+# Datos de ejecución y salidas
+outputs/
+uploads/
+*.pdf.json
+*.log
+*.tmp
+
+# Entornos / OS
+.DS_Store
+.env
+.env.*
+.env.local
+
+# Archivos grandes temporales
+*.zip
+Archivo.zip
